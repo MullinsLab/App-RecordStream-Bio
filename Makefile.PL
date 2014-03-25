@@ -19,7 +19,9 @@ my %WriteMakefileArgs = (
   "EXE_FILES" => [],
   "LICENSE" => "perl",
   "NAME" => "App::RecordStream::Bio",
-  "PREREQ_PM" => {},
+  "PREREQ_PM" => {
+    "App::RecordStream" => "v4.0.0"
+  },
   "TEST_REQUIRES" => {
     "Test::More" => "0.88"
   },
@@ -31,6 +33,7 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
+  "App::RecordStream" => "v4.0.0",
   "Test::More" => "0.88"
 );
 

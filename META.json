@@ -36,6 +36,7 @@
       },
       "runtime" : {
          "requires" : {
+            "App::RecordStream" : "v4.0.0",
             "perl" : "5.008005"
          }
       },
