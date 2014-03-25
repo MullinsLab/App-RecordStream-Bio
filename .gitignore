@@ -1,7 +1,7 @@
 /App-RecordStream-Bio-*
-/.build
-/_build*
-/Build
+/blib
+/Makefile
+/Makefile.old
 MYMETA.*
 !META.json
 /.prove
