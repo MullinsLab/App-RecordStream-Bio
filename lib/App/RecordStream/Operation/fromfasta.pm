@@ -37,7 +37,9 @@ sub accept_line {
 sub push_accumulated_record {
     my $self = shift;
     if ( my $record = delete $self->{RECORD} ) {
-        $record->set( sequence => delete $self->{SEQUENCE} );
+        my $seq = delete $self->{SEQUENCE};
+        chomp $seq if defined $seq;
+        $record->set( sequence => $seq );
         $self->push_record( $record );
         return 1;
     } else {
