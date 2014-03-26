@@ -1,5 +1,5 @@
 {
-   "abstract" : "Blah blah blah",
+   "abstract" : "A collection of record-handling tools related to biology",
    "author" : [
       "Thomas Sibley <trsibley@uw.edu>"
    ],
@@ -36,12 +36,13 @@
       },
       "runtime" : {
          "requires" : {
-            "App::RecordStream" : "v4.0.0",
+            "App::RecordStream::Operation" : "v4.0.0",
             "perl" : "5.008005"
          }
       },
       "test" : {
          "requires" : {
+            "App::RecordStream::Test::Tester" : "v4.0.0",
             "Test::More" : "0.88"
          }
       }

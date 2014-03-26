@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "Blah blah blah",
+  "ABSTRACT" => "A collection of record-handling tools related to biology",
   "AUTHOR" => "Thomas Sibley <trsibley\@uw.edu>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
@@ -20,9 +20,10 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "App::RecordStream::Bio",
   "PREREQ_PM" => {
-    "App::RecordStream" => "v4.0.0"
+    "App::RecordStream::Operation" => "v4.0.0"
   },
   "TEST_REQUIRES" => {
+    "App::RecordStream::Test::Tester" => "v4.0.0",
     "Test::More" => "0.88"
   },
   "VERSION" => "0.01",
@@ -33,7 +34,8 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
-  "App::RecordStream" => "v4.0.0",
+  "App::RecordStream::Operation" => "v4.0.0",
+  "App::RecordStream::Test::Tester" => "v4.0.0",
   "Test::More" => "0.88"
 );
 
