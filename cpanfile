@@ -7,3 +7,7 @@ on test => sub {
     requires 'Test::More', '0.88';
     requires 'App::RecordStream::Test::Tester' => '4.0.0';
 };
+
+on develop => sub {
+    requires 'Dist::Zilla::Plugin::Run::BeforeBuild';
+};

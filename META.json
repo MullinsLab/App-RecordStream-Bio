@@ -31,6 +31,7 @@
       },
       "develop" : {
          "requires" : {
+            "Dist::Zilla::Plugin::Run::BeforeBuild" : "0",
             "Test::Pod" : "1.41"
          }
       },
