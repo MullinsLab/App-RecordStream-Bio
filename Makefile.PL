@@ -16,7 +16,9 @@ my %WriteMakefileArgs = (
     "ExtUtils::MakeMaker" => "6.30"
   },
   "DISTNAME" => "App-RecordStream-Bio",
-  "EXE_FILES" => [],
+  "EXE_FILES" => [
+    "script/recs-fromfasta"
+  ],
   "LICENSE" => "perl",
   "NAME" => "App::RecordStream::Bio",
   "PREREQ_PM" => {
