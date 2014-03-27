@@ -24,9 +24,14 @@ sub accept_line {
     my $line = shift;
 
     if ($line =~ /^>(.*)$/) {
-        my $id = $1;
+        my $name = $1;
+        my ($id, $desc) = split /\h/, $name, 2;
         $self->push_accumulated_record;
-        $self->{RECORD} = App::RecordStream::Record->new( id => $id );
+        $self->{RECORD} = App::RecordStream::Record->new(
+            name        => $name,
+            id          => $id,
+            description => $desc,
+        );
     } else {
         $self->{SEQUENCE} .= $line . ($self->{ONELINE} ? "" : "\n");
     }
@@ -65,7 +70,8 @@ sub usage {
 Usage: recs-fromfasta <args> [<files>]
    __FORMAT_TEXT__
    Each sequence from the FASTA input files (or stdin) produces an output
-   record with the keys id and sequence.
+   record with the keys name and sequence.  Each sequence name is also split into
+   id and description on the first whitespace, if any.
    __FORMAT_TEXT__
 
 Arguments:
