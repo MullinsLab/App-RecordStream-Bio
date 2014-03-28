@@ -20,6 +20,11 @@ App::RecordStream::Bio - A collection of record-handling tools related to biolog
     recs-fromfasta --oneline < seqs.fasta           \
         | recs-grep '{{id}} =~ /\b(POL|GAG)\b/i'    \
         | recs-tocsv -k id,sequence
+    
+    # Filter gaps from sequences
+    recs-fromfasta seqs.fasta \
+        | recs-xform '{{seq}} =~ s/-//g' \
+        | recs-tofasta > seqs-nogaps.fasta
 
 =head1 DESCRIPTION
 
@@ -32,6 +37,8 @@ them via their command line wrappers within a larger record stream pipeline.
 =head1 TOOLS
 
 L<recs-fromfasta>
+
+L<recs-tofasta>
 
 =head1 AUTHOR
 
