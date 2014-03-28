@@ -2,5 +2,14 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.02  2014-03-28 10:55:29 PDT
+    - BACKWARDS INCOMPATIBLE CHANGE: recs-fromfasta now splits the sequence
+      name into id and description on the first space.  If you were previously
+      using the "id" key, you'll want to start using the "name" key.  I doubt
+      anyone is using this but me, though. :)
+
+    - Added recs-tofasta for a quick way to get fasta back out after munging,
+      filtering, etc.
+
 0.01  2014-03-25 17:53:25 PDT
-        - Initial release
+    - Initial release

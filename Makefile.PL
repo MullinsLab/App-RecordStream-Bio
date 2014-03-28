@@ -17,7 +17,8 @@ my %WriteMakefileArgs = (
   },
   "DISTNAME" => "App-RecordStream-Bio",
   "EXE_FILES" => [
-    "script/recs-fromfasta"
+    "script/recs-fromfasta",
+    "script/recs-tofasta"
   ],
   "LICENSE" => "perl",
   "NAME" => "App::RecordStream::Bio",
@@ -28,7 +29,7 @@ my %WriteMakefileArgs = (
     "App::RecordStream::Test::Tester" => "v4.0.0",
     "Test::More" => "0.88"
   },
-  "VERSION" => "0.01",
+  "VERSION" => "0.02",
   "test" => {
     "TESTS" => "t/*.t"
   }
