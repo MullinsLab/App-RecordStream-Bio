@@ -15,6 +15,8 @@ recs-tofasta
        --id|-i <keyspec>            Record field to use for the sequence id
        --description|-d <keyspec>   Record field to use for the sequence description
        --sequence|-s <keyspec>      Record field to use for the sequence itself
+       --width|w <#>                Format sequence blocks to # characters wide
+       --oneline                    Format sequences on a single long line
        --filename-key|fk <keyspec>  Add a key with the source filename (if no
                                     filename is applicable will put NONE)
     

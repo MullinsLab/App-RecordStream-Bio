@@ -17,6 +17,8 @@ sub init {
         "id|i=s"            => \$id,
         "description|d=s"   => \$desc,
         "sequence|s=s"      => \$seq,
+        "width|w=i"         => \($self->{WIDTH}),
+        "oneline"           => \($self->{ONELINE}),
     };
 
     $self->parse_options($args, $spec);
@@ -41,8 +43,19 @@ sub accept_record {
     open my $buf, '>', \(my $fasta)
         or die "Can't open string for writing: $!";
     my $io = Bio::SeqIO->new( -fh => $buf, -format => 'fasta' );
+    $io->width($self->{WIDTH}) if $self->{WIDTH};
     $io->write_seq($seq);
     chomp $fasta;
+
+    if ($self->{ONELINE}) {
+        # Kind hacky, but nicer than abusing width's use by Bio::SeqIO::fasta
+        # in an unpack() template.  Also clearer than using a regex to remove
+        # all newlines following the first.
+        my @lines = split /\n/, $fasta;
+        $fasta = join "\n",
+                    shift @lines,    # description line
+                    join "", @lines; # rest of seq as a single line
+    }
 
     $self->push_line($fasta);
 
@@ -62,6 +75,8 @@ sub usage {
         [ 'id|-i <keyspec>',            'Record field to use for the sequence id' ],
         [ 'description|-d <keyspec>',   'Record field to use for the sequence description' ],
         [ 'sequence|-s <keyspec>',      'Record field to use for the sequence itself' ],
+        [ 'width|w <#>',                'Format sequence blocks to # characters wide' ],
+        [ 'oneline',                    'Format sequences on a single long line' ],
     ];
 
     my $args_string = $self->options_string($options);
