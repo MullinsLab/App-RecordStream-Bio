@@ -6,7 +6,8 @@ recs-fromfasta
 
     Usage: recs-fromfasta <args> [<files>]
        Each sequence from the FASTA input files (or stdin) produces an output record
-       with the keys id and sequence.
+       with the keys name and sequence. Each sequence name is also split into id and
+       description on the first whitespace, if any.
     
     Arguments:
        --oneline                    Strip any newlines from the sequence so it is
