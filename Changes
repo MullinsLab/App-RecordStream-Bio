@@ -2,6 +2,10 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.04  2014-03-28 15:11:57 PDT
+    - Added --width N and --oneline options for recs-tofasta to control
+      formatting
+
 0.03  2014-03-28 10:59:11 PDT
     - Added example of recs-tofasta to primary dist doc
 

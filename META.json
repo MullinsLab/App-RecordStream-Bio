@@ -51,15 +51,15 @@
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/tsibley/App-RecordStream-Bio/issues"
+         "web" : "https://github.com/MullinsLab/App-RecordStream-Bio/issues"
       },
-      "homepage" : "https://github.com/tsibley/App-RecordStream-Bio",
+      "homepage" : "https://github.com/MullinsLab/App-RecordStream-Bio",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/tsibley/App-RecordStream-Bio.git",
-         "web" : "https://github.com/tsibley/App-RecordStream-Bio"
+         "url" : "https://github.com/MullinsLab/App-RecordStream-Bio.git",
+         "web" : "https://github.com/MullinsLab/App-RecordStream-Bio"
       }
    },
-   "version" : "0.03"
+   "version" : "0.04"
 }
 
