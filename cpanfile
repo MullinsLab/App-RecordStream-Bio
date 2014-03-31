@@ -1,4 +1,4 @@
-requires 'perl', '5.008005';
+requires 'perl', '5.010';
 
 # minimum base version, just to start somewhere known.
 requires 'App::RecordStream::Operation' => '4.0.0';
