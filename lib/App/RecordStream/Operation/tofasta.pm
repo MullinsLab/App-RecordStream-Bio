@@ -19,9 +19,13 @@ sub init {
         "sequence|s=s"      => \$seq,
         "width|w=i"         => \($self->{WIDTH}),
         "oneline"           => \($self->{ONELINE}),
+        "passthru"          => \($self->{PASSTHRU}),
     };
 
     $self->parse_options($args, $spec);
+
+    die "--passthru is incompatible with --oneline and --width\n\n"
+        if $self->{PASSTHRU} and ($self->{ONELINE} or $self->{WIDTH});
 
     $self->{KEYS}{id}    = $id;
     $self->{KEYS}{desc}  = $desc;
@@ -31,30 +35,39 @@ sub init {
 sub accept_record {
     my $self   = shift;
     my $record = shift;
+    my $fasta;
 
     my %props = map {; "-$_" => ${$record->guess_key_from_spec($self->{KEYS}{$_})} }
                 keys %{$self->{KEYS}};
 
-    # Bio::SeqIO complains fatally about spaces
-    $props{'-seq'} =~ s/\s+//g if defined $props{'-seq'};
+    if ($self->{PASSTHRU}) {
+        $fasta = sprintf ">%s\n%s",
+            join(" ", map { s/[\n\r]//g; $_ }
+                     grep { defined and length }
+                          $props{'-id'}, $props{'-desc'}),
+            $props{'-seq'};
+    } else {
+        # Bio::SeqIO complains fatally about spaces
+        $props{'-seq'} =~ s/\s+//g if defined $props{'-seq'};
 
-    my $seq = Bio::Seq->new(%props);
+        my $seq = Bio::Seq->new(%props);
 
-    open my $buf, '>', \(my $fasta)
-        or die "Can't open string for writing: $!";
-    my $io = Bio::SeqIO->new( -fh => $buf, -format => 'fasta' );
-    $io->width($self->{WIDTH}) if $self->{WIDTH};
-    $io->write_seq($seq);
-    chomp $fasta;
+        open my $buf, '>', \$fasta
+            or die "Can't open string for writing: $!";
+        my $io = Bio::SeqIO->new( -fh => $buf, -format => 'fasta' );
+        $io->width($self->{WIDTH}) if $self->{WIDTH};
+        $io->write_seq($seq);
+        chomp $fasta;
 
-    if ($self->{ONELINE}) {
-        # Kind hacky, but nicer than abusing width's use by Bio::SeqIO::fasta
-        # in an unpack() template.  Also clearer than using a regex to remove
-        # all newlines following the first.
-        my @lines = split /\n/, $fasta;
-        $fasta = join "\n",
-                    shift @lines,    # description line
-                    join "", @lines; # rest of seq as a single line
+        if ($self->{ONELINE}) {
+            # Kind hacky, but nicer than abusing width's use by Bio::SeqIO::fasta
+            # in an unpack() template.  Also clearer than using a regex to remove
+            # all newlines following the first.
+            my @lines = split /\n/, $fasta;
+            $fasta = join "\n",
+                        shift @lines,    # description line
+                        join "", @lines; # rest of seq as a single line
+        }
     }
 
     $self->push_line($fasta);
@@ -77,6 +90,7 @@ sub usage {
         [ 'sequence|-s <keyspec>',      'Record field to use for the sequence itself' ],
         [ 'width|w <#>',                'Format sequence blocks to # characters wide' ],
         [ 'oneline',                    'Format sequences on a single long line' ],
+        [ 'passthru',                   'Pass through nucleotides unformatted' ],
     ];
 
     my $args_string = $self->options_string($options);
