@@ -17,6 +17,7 @@ recs-tofasta
        --sequence|-s <keyspec>      Record field to use for the sequence itself
        --width|w <#>                Format sequence blocks to # characters wide
        --oneline                    Format sequences on a single long line
+       --passthru                   Pass through nucleotides unformatted
        --filename-key|fk <keyspec>  Add a key with the source filename (if no
                                     filename is applicable will put NONE)
     
