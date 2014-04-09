@@ -2,6 +2,9 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.06  2014-04-08 18:06:48 PDT
+    - Add a --passthru option to recs-tofasta to skip nucleotide formatting
+
 0.05  2014-03-31 12:25:47 PDT
     - Correct minimum Perl version to 5.10 to support \h
 
