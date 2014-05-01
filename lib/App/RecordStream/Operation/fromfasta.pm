@@ -31,6 +31,7 @@ sub accept_line {
             name        => $name,
             id          => $id,
             description => $desc,
+            _filename   => $self->get_current_filename,
         );
     } else {
         $self->{SEQUENCE} .= $line . ($self->{ONELINE} ? "" : "\n");
@@ -45,7 +46,11 @@ sub push_accumulated_record {
         my $seq = delete $self->{SEQUENCE};
         chomp $seq if defined $seq;
         $record->set( sequence => $seq );
+
+        my $filename = $self->get_current_filename;
+        $self->update_current_filename( delete $record->{_filename} );
         $self->push_record( $record );
+        $self->update_current_filename( $filename );
         return 1;
     } else {
         return 0;
