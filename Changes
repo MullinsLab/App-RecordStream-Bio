@@ -2,6 +2,10 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.07  2014-05-01 17:12:33 PDT
+    - Bug fix: recs-fromfasta with --filename-key produced incorrect results
+      for the last sequence in a file when using multiple input files.
+
 0.06  2014-04-08 18:06:48 PDT
     - Add a --passthru option to recs-tofasta to skip nucleotide formatting
 
