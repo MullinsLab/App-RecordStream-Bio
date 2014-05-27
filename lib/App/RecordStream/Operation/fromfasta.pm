@@ -23,7 +23,7 @@ sub accept_line {
     my $self = shift;
     my $line = shift;
 
-    if ($line =~ /^>(.*)$/) {
+    if ($line =~ /^>\s*(.*?)\s*$/) {
         my $name = $1;
         my ($id, $desc) = split /\h/, $name, 2;
         $self->push_accumulated_record;

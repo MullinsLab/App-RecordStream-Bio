@@ -17,7 +17,7 @@ TCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGG
 GGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACT
 TCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGG
 GGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACT
-> baz
+> baz 
 SLYNTVAVLYYVHQR
 >empty
 >bogus
@@ -25,7 +25,7 @@ TCATTATATAATACAGTAGC>>CCCTCTATTGTGTGCATCAAAGG
 INPUT
 $output = <<'OUTPUT';
 {"id":"foo","description":"baz bar","name":"foo baz bar","sequence":"TCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGG\nGGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACT\nTCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGG\nGGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACT"}
-{"id":"","description":"baz","name":" baz", "sequence":"SLYNTVAVLYYVHQR"}
+{"id":"baz","description":null,"name":"baz", "sequence":"SLYNTVAVLYYVHQR"}
 {"id":"empty","description":null,"name":"empty","sequence":null}
 {"id":"bogus","description":null,"name":"bogus","sequence":"TCATTATATAATACAGTAGC>>CCCTCTATTGTGTGCATCAAAGG"}
 OUTPUT
@@ -33,7 +33,7 @@ $tester->test_input([], $input, $output);
 
 $output = <<'OUTPUT';
 {"id":"foo","description":"baz bar","name":"foo baz bar","sequence":"TCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGGGGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACTTCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGGGGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACT"}
-{"id":"","description":"baz","name":" baz", "sequence":"SLYNTVAVLYYVHQR"}
+{"id":"baz","description":null,"name":"baz", "sequence":"SLYNTVAVLYYVHQR"}
 {"id":"empty","description":null,"name":"empty","sequence":null}
 {"id":"bogus","description":null,"name":"bogus","sequence":"TCATTATATAATACAGTAGC>>CCCTCTATTGTGTGCATCAAAGG"}
 OUTPUT
