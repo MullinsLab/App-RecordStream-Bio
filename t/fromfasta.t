@@ -23,12 +23,14 @@ SLYNTVAVLYYVHQR
 >empty
 >bogus
 TCATTATATAATACAGTAGC>>CCCTCTATTGTGTGCATCAAAGG
+>empty2
 INPUT
 $output = <<'OUTPUT';
 {"id":"foo","description":"baz bar","name":"foo baz bar","sequence":"TCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGG\nGGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACT\nTCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGG\nGGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACT"}
 {"id":"baz","description":null,"name":"baz", "sequence":"SLYNTVAVLYYVHQR"}
 {"id":"empty","description":null,"name":"empty","sequence":null}
 {"id":"bogus","description":null,"name":"bogus","sequence":"TCATTATATAATACAGTAGC>>CCCTCTATTGTGTGCATCAAAGG"}
+{"id":"empty2","description":null,"name":"empty2","sequence":null}
 OUTPUT
 $tester->test_input([], $input, $output);
 
@@ -38,5 +40,6 @@ $output = <<'OUTPUT';
 {"id":"baz","description":null,"name":"baz", "sequence":"SLYNTVAVLYYVHQR"}
 {"id":"empty","description":null,"name":"empty","sequence":null}
 {"id":"bogus","description":null,"name":"bogus","sequence":"TCATTATATAATACAGTAGC>>CCCTCTATTGTGTGCATCAAAGG"}
+{"id":"empty2","description":null,"name":"empty2","sequence":null}
 OUTPUT
 $tester->test_input(['--oneline'], $input, $output);
