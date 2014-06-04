@@ -11,6 +11,7 @@ my $output;
 
 my $tester = App::RecordStream::Test::Tester->new('fromfasta');
 
+diag "basic input";
 $input = <<'INPUT';
 >foo baz bar
 TCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGG
@@ -31,6 +32,7 @@ $output = <<'OUTPUT';
 OUTPUT
 $tester->test_input([], $input, $output);
 
+diag "--oneline";
 $output = <<'OUTPUT';
 {"id":"foo","description":"baz bar","name":"foo baz bar","sequence":"TCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGGGGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACTTCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGGGGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACT"}
 {"id":"baz","description":null,"name":"baz", "sequence":"SLYNTVAVLYYVHQR"}
