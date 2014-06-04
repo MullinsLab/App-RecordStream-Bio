@@ -3,6 +3,9 @@ requires 'perl', '5.010';
 # minimum base version, just to start somewhere known.
 requires 'App::RecordStream::Operation' => '4.0.0';
 
+requires 'Bio::Seq';
+requires 'Bio::SeqIO';
+
 on test => sub {
     requires 'Test::More', '0.88';
     requires 'App::RecordStream::Test::Tester' => '4.0.0';
