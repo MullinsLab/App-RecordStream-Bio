@@ -45,7 +45,7 @@ sub accept_record {
             join(" ", map { s/[\n\r]//g; $_ }
                      grep { defined and length }
                           $props{'-id'}, $props{'-desc'}),
-            $props{'-seq'};
+            $props{'-seq'} || "";
     } else {
         # Bio::SeqIO complains fatally about spaces
         $props{'-seq'} =~ s/\s+//g if defined $props{'-seq'};
@@ -70,6 +70,7 @@ sub accept_record {
         }
     }
 
+    chomp $fasta;
     $self->push_line($fasta);
 
     return 1;
