@@ -2,6 +2,10 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.09  2014-06-04 16:18:36 PDT
+    - recs-tofasta: Avoid extra blank lines after sequences without any bases
+    - Comprehensive tests for fromfasta and tofasta
+
 0.08  2014-05-27 15:48:45 PDT
     - recs-fromfasta: Strip leading/trailing spaces from sequence names
 
