@@ -31,7 +31,7 @@ my %WriteMakefileArgs = (
     "App::RecordStream::Test::Tester" => "v4.0.0",
     "Test::More" => "0.88"
   },
-  "VERSION" => "0.09",
+  "VERSION" => "0.10",
   "test" => {
     "TESTS" => "t/*.t"
   }

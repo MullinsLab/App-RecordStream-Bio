@@ -2,6 +2,9 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.10  2014-06-04 17:24:18 PDT
+    - Declare dependency on BioPerl
+
 0.09  2014-06-04 16:18:36 PDT
     - recs-tofasta: Avoid extra blank lines after sequences without any bases
     - Comprehensive tests for fromfasta and tofasta
