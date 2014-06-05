@@ -10,7 +10,6 @@ App::RecordStream::Bio - A collection of record-handling tools related to biolog
         | recs-grep '{{id}} =~ /\b(POL|GAG)\b/i'    \
         | recs-tocsv -k id,sequence
     
-
     # Filter gaps from sequences
     recs-fromfasta seqs.fasta \
         | recs-xform '{{seq}} =~ s/-//g' \
@@ -19,16 +18,16 @@ App::RecordStream::Bio - A collection of record-handling tools related to biolog
 # DESCRIPTION
 
 App::RecordStream::Bio is a collection of record-handling tools related to
-biology built upon the excellent [App::RecordStream](http://search.cpan.org/perldoc?App::RecordStream).
+biology built upon the excellent [App::RecordStream](https://metacpan.org/pod/App::RecordStream).
 
 The operations themselves are written as classes, but you'll almost always use
 them via their command line wrappers within a larger record stream pipeline.
 
 # TOOLS
 
-[recs-fromfasta](http://search.cpan.org/perldoc?recs-fromfasta)
+[recs-fromfasta](https://metacpan.org/pod/recs-fromfasta)
 
-[recs-tofasta](http://search.cpan.org/perldoc?recs-tofasta)
+[recs-tofasta](https://metacpan.org/pod/recs-tofasta)
 
 # AUTHOR
 
@@ -45,4 +44,4 @@ it under the same terms as Perl itself.
 
 # SEE ALSO
 
-[App::RecordStream](http://search.cpan.org/perldoc?App::RecordStream)
+[App::RecordStream](https://metacpan.org/pod/App::RecordStream)

@@ -4,7 +4,7 @@
       "Thomas Sibley <trsibley@uw.edu>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Milla version v1.0.4, Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.132830",
+   "generated_by" : "Dist::Milla version v1.0.5, Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.140640",
    "license" : [
       "perl_5"
    ],
@@ -38,6 +38,8 @@
       "runtime" : {
          "requires" : {
             "App::RecordStream::Operation" : "v4.0.0",
+            "Bio::Seq" : "0",
+            "Bio::SeqIO" : "0",
             "perl" : "5.010"
          }
       },
