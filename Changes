@@ -2,6 +2,10 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.11  2014-06-09 13:14:25 PDT
+    - Declare more test dependencies
+    - Fix t/fromfasta.t on Win32 due to broken assumptions about temp filenames
+
 0.10  2014-06-04 17:24:18 PDT
     - Declare dependency on BioPerl
 
