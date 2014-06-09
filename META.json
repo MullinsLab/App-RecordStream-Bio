@@ -45,7 +45,9 @@
       },
       "test" : {
          "requires" : {
+            "App::RecordStream::Test::OperationHelper" : "v4.0.0",
             "App::RecordStream::Test::Tester" : "v4.0.0",
+            "File::Temp" : "0",
             "Test::More" : "0.88"
          }
       }
