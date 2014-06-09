@@ -31,6 +31,7 @@ my %WriteMakefileArgs = (
     "App::RecordStream::Test::OperationHelper" => "v4.0.0",
     "App::RecordStream::Test::Tester" => "v4.0.0",
     "File::Temp" => 0,
+    "JSON" => 0,
     "Test::More" => "0.88"
   },
   "VERSION" => "0.10",
@@ -47,6 +48,7 @@ my %FallbackPrereqs = (
   "Bio::Seq" => 0,
   "Bio::SeqIO" => 0,
   "File::Temp" => 0,
+  "JSON" => 0,
   "Test::More" => "0.88"
 );
 

@@ -11,6 +11,7 @@ on test => sub {
     requires 'App::RecordStream::Test::Tester'          => '4.0.0';
     requires 'App::RecordStream::Test::OperationHelper' => '4.0.0';
     requires 'File::Temp';
+    requires 'JSON';
 };
 
 on develop => sub {
