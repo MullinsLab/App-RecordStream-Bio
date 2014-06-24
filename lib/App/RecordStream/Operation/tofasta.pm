@@ -38,6 +38,7 @@ sub accept_record {
     my $fasta;
 
     my %props = map {; "-$_" => ${$record->guess_key_from_spec($self->{KEYS}{$_})} }
+                grep { $self->{KEYS}{$_} ne 'NONE' }
                 keys %{$self->{KEYS}};
 
     if ($self->{PASSTHRU}) {
@@ -103,6 +104,9 @@ Usage: recs-tofasta <options> [files]
 
    By default the keys "id", "description", and "sequence" are used to build
    the FASTA format.  These defaults match up with what recs-fromfasta produces.
+   The special key name "NONE" may be used to indicate that no key should be
+   used, disabling the defaults.  Note that warnings may be generated if you
+   specify NONE for --id without specifying --passthru.
    __FORMAT_TEXT__
 
 Arguments:

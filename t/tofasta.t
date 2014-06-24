@@ -109,7 +109,7 @@ SLYNTVAVLYYVHQR
 TCATTATATAATACAGTAGCCCCTCTATTGTGTGCATCAAAGG
 >5
 OUTPUT
-App::RecordStream::Test::OperationHelper->test_output('tofasta' => ['--id=num', '--desc=doesnotexist'], $input, $output);
+App::RecordStream::Test::OperationHelper->test_output('tofasta' => ['--id=num', '--desc=NONE'], $input, $output);
 
 diag "--sequence";
 $output = <<'OUTPUT';
@@ -124,4 +124,45 @@ slyntvavlyyvhqr
 tcattatataatacagtagcccctctattgtgtgcatcaaagg
 >5
 OUTPUT
-App::RecordStream::Test::OperationHelper->test_output('tofasta' => ['--id=num', '--desc=doesnotexist', '--seq=lower_seq'], $input, $output);
+App::RecordStream::Test::OperationHelper->test_output('tofasta' => ['--id=num', '--desc=NONE', '--seq=lower_seq'], $input, $output);
+
+diag "--id=NONE";
+$output = <<'OUTPUT';
+> baz bar
+TCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGGGGAAACTACGTGTGT
+TATCTCCCAACGATGACATAATATATTACTTCATTATATAATACAGTAGCAACCCTCTAT
+TGTGTGCATCAAAGGGGAAACTACGTGTGTTATCTCCCAACGATGACATAATATATTACT
+>
+SLYNTVAVLYYVHQR
+>
+>
+TCATTATATAATACAGTAGCCCCTCTATTGTGTGCATCAAAGG
+>
+OUTPUT
+App::RecordStream::Test::OperationHelper->test_output('tofasta' => ['--id=NONE'], $input, $output);
+
+diag "--id=NONE --passthru";
+$output = <<'OUTPUT';
+>baz bar
+TCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGGGGAAACTACGTGTGTTATCTCCCAACGATGACATA
+ATATATTACTTCATTATATAATACAGTAGCAACCCTCTATTGTGTGCATCAAAGGGGAAACTACGTGTGTTATCTCCCAA
+CGATGACATAATATATTACT
+>
+SLYNTVA
+VLYYVHQR
+>
+>
+TCATTATATAATACAGTAGCCCCTCTATTGTGTGCATCAAAGG
+>
+OUTPUT
+App::RecordStream::Test::OperationHelper->test_output('tofasta' => ['--id=NONE', '--passthru'], $input, $output);
+
+diag "--sequence=NONE";
+$output = <<'OUTPUT';
+>1 baz bar
+>2
+>3
+>4
+>5
+OUTPUT
+App::RecordStream::Test::OperationHelper->test_output('tofasta' => ['--id=num', '--sequence=NONE'], $input, $output);
