@@ -4,7 +4,7 @@ use Test::More 'no_plan';
 
 use App::RecordStream::Test::OperationHelper;
 
-BEGIN { use_ok( 'App::RecordStream::Operation::tofasta' ) };
+use App::RecordStream::Operation::tofasta;
 
 my $input;
 my $output;

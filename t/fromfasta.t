@@ -7,7 +7,7 @@ use App::RecordStream::Test::OperationHelper;
 use File::Temp ();
 use JSON ();
 
-BEGIN { use_ok( 'App::RecordStream::Operation::fromfasta' ) };
+use App::RecordStream::Operation::fromfasta;
 
 my $input;
 my $output;
