@@ -4,7 +4,7 @@ use Test::More 'no_plan';
 
 use App::RecordStream::Test::OperationHelper;
 
-BEGIN { use_ok( 'App::RecordStream::Operation::tofasta' ) };
+BEGIN { use_ok( 'App::RecordStream::Operation::tofasta' ) or BAIL_OUT('Compilation of App::RecordStream::Operation::tofasta failed');};
 
 my $input;
 my $output;
