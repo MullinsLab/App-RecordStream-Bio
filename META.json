@@ -65,6 +65,9 @@
          "web" : "https://github.com/MullinsLab/App-RecordStream-Bio"
       }
    },
-   "version" : "0.12"
+   "version" : "0.13",
+   "x_contributors" : [
+      "Thomas Sibley <trsibley@uw.edu>"
+   ]
 }
 

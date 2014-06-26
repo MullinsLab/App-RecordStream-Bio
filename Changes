@@ -2,6 +2,10 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.13  2014-06-26 14:35:42 PDT
+    - Avoid test hangs when prerequisites are not installed.  Thanks to
+      Alexandr Ciornii for the heads up.
+
 0.12  2014-06-24 16:48:48 PDT
     - Allow a special key name "NONE" to disable the default keys for id,
       description, and sequence

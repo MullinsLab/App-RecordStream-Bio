@@ -2,7 +2,7 @@ package App::RecordStream::Bio;
 
 use strict;
 use 5.010;
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 1;
 __END__
