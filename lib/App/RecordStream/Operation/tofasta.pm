@@ -5,9 +5,6 @@ use warnings;
 
 use base qw(App::RecordStream::Operation);
 
-use Bio::Seq;
-use Bio::SeqIO;
-
 sub init {
     my $self = shift;
     my $args = shift;
@@ -27,6 +24,8 @@ sub init {
     die "--passthru is incompatible with --oneline and --width\n\n"
         if $self->{PASSTHRU} and ($self->{ONELINE} or $self->{WIDTH});
 
+    $self->{WIDTH} ||= 60;
+
     $self->{KEYS}{id}    = $id;
     $self->{KEYS}{desc}  = $desc;
     $self->{KEYS}{seq}   = $seq;
@@ -35,41 +34,32 @@ sub init {
 sub accept_record {
     my $self   = shift;
     my $record = shift;
-    my $fasta;
 
     my %props = map {; "-$_" => ${$record->guess_key_from_spec($self->{KEYS}{$_})} }
                 grep { $self->{KEYS}{$_} ne 'NONE' }
                 keys %{$self->{KEYS}};
 
-    if ($self->{PASSTHRU}) {
-        $fasta = sprintf ">%s\n%s",
-            join(" ", map { s/[\n\r]//g; $_ }
-                     grep { defined and length }
-                          $props{'-id'}, $props{'-desc'}),
-            $props{'-seq'} || "";
-    } else {
-        # Bio::SeqIO complains fatally about spaces
-        $props{'-seq'} =~ s/\s+//g if defined $props{'-seq'};
-
-        my $seq = Bio::Seq->new(%props);
-
-        open my $buf, '>', \$fasta
-            or die "Can't open string for writing: $!";
-        my $io = Bio::SeqIO->new( -fh => $buf, -format => 'fasta' );
-        $io->width($self->{WIDTH}) if $self->{WIDTH};
-        $io->write_seq($seq);
-        chomp $fasta;
+    if (not $self->{PASSTHRU} and defined $props{'-seq'}) {
+        $props{'-seq'} =~ s/\s+//g; # fixme
 
         if ($self->{ONELINE}) {
-            # Kind hacky, but nicer than abusing width's use by Bio::SeqIO::fasta
-            # in an unpack() template.  Also clearer than using a regex to remove
-            # all newlines following the first.
-            my @lines = split /\n/, $fasta;
-            $fasta = join "\n",
-                        shift @lines,    # description line
-                        join "", @lines; # rest of seq as a single line
+            $props{'-seq'} =~ s/[\n\r]//g;
+        } elsif ($self->{WIDTH}) {
+            my $width = $self->{WIDTH} + 0;
+            $props{'-seq'} =~ s/(.{$width})/$1\n/g;
         }
     }
+
+    # Retain previous behaviour of preserving a leading space before any
+    # description without --passthru
+    $props{'-id'} = ""
+        unless defined $props{'-id'} or $self->{PASSTHRU};
+
+    my $fasta = sprintf ">%s\n%s",
+        join(" ", map { s/[\n\r]//g; $_ }
+                 grep { defined }
+                      @props{'-id', '-desc'}),
+        $props{'-seq'} || "";
 
     chomp $fasta;
     $self->push_line($fasta);
@@ -105,8 +95,9 @@ Usage: recs-tofasta <options> [files]
    By default the keys "id", "description", and "sequence" are used to build
    the FASTA format.  These defaults match up with what recs-fromfasta produces.
    The special key name "NONE" may be used to indicate that no key should be
-   used, disabling the defaults.  Note that warnings may be generated if you
-   specify NONE for --id without specifying --passthru.
+   used, disabling the defaults.  Note that specifying NONE for --id will cause
+   any --description to appear with a space between it and the line's ">",
+   unless --passthru is also used.
    __FORMAT_TEXT__
 
 Arguments:

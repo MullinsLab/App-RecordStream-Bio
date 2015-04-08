@@ -11,8 +11,9 @@ recs-tofasta
        By default the keys "id", "description", and "sequence" are used to build the
        FASTA format. These defaults match up with what recs-fromfasta produces. The
        special key name "NONE" may be used to indicate that no key should be used,
-       disabling the defaults. Note that warnings may be generated if you specify
-       NONE for --id without specifying --passthru.
+       disabling the defaults. Note that specifying NONE for --id will cause any --
+       description to appear with a space between it and the line's ">", unless --
+       passthru is also used.
     
     Arguments:
        --id|-i <keyspec>            Record field to use for the sequence id

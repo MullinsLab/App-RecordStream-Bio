@@ -38,8 +38,6 @@
       "runtime" : {
          "requires" : {
             "App::RecordStream::Operation" : "v4.0.0",
-            "Bio::Seq" : "0",
-            "Bio::SeqIO" : "0",
             "perl" : "5.010"
          }
       },
