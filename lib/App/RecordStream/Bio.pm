@@ -51,6 +51,42 @@ L<recs-fromfasta>
 
 L<recs-tofasta>
 
+=head1 INSTALLATION
+
+=head2 Quick, standalone bundle
+
+The quickest way to start using these tools is via the minimal, standalone
+bundle (also known as the "fatpacked" version).  First, grab
+L<recs|App::RecordStream/INSTALLATION> if you don't already have it:
+
+  curl -fsSL https://recs.pl > recs
+  chmod +x recs
+
+Then grab these bio tools and put them in place for recs:
+
+  mkdir -p ~/.recs/site/
+  curl -fsSL https://recs.pl/bio > ~/.recs/site/bio.pm
+
+Congrats, you should now be able to run:
+
+  ./recs fromfasta --help
+  ./recs tofasta --help
+
+recs version 4.0.14 or newer is required to support site loading from
+F<~/.recs/site>.
+
+=head2 From CPAN
+
+You can also install from L<CPAN|http://cpan.org> as App::RecordStream::Bio:
+
+  cpanm App::RecordStream::Bio
+
+Other CPAN clients such as L<cpan> and L<cpanp> also work just great.
+
+If you don't have L<cpanm> itself, you can install it easily with:
+
+  curl -fsSL https://cpanmin.us | perl - App::cpanminus
+
 =head1 AUTHOR
 
 Thomas Sibley E<lt>trsibley@uw.eduE<gt>

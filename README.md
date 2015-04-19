@@ -29,6 +29,42 @@ them via their command line wrappers within a larger record stream pipeline.
 
 [recs-tofasta](https://metacpan.org/pod/recs-tofasta)
 
+# INSTALLATION
+
+## Quick, standalone bundle
+
+The quickest way to start using these tools is via the minimal, standalone
+bundle (also known as the "fatpacked" version).  First, grab
+[recs](https://metacpan.org/pod/App::RecordStream#INSTALLATION) if you don't already have it:
+
+    curl -fsSL https://recs.pl > recs
+    chmod +x recs
+
+Then grab these bio tools and put them in place for recs:
+
+    mkdir -p ~/.recs/site/
+    curl -fsSL https://recs.pl/bio > ~/.recs/site/bio.pm
+
+Congrats, you should now be able to run:
+
+    ./recs fromfasta --help
+    ./recs tofasta --help
+
+recs version 4.0.14 or newer is required to support site loading from
+`~/.recs/site`.
+
+## From CPAN
+
+You can also install from [CPAN](http://cpan.org) as App::RecordStream::Bio:
+
+    cpanm App::RecordStream::Bio
+
+Other CPAN clients such as [cpan](https://metacpan.org/pod/cpan) and [cpanp](https://metacpan.org/pod/cpanp) also work just great.
+
+If you don't have [cpanm](https://metacpan.org/pod/cpanm) itself, you can install it easily with:
+
+    curl -fsSL https://cpanmin.us | perl - App::cpanminus
+
 # AUTHOR
 
 Thomas Sibley <trsibley@uw.edu>
