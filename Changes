@@ -2,6 +2,11 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.15  2015-04-19 21:19:03 PDT
+    - Provide a fatpacked build suitable for use by the fatpacked version of
+      recs (via the custom site mechanism).  See the installation documentation
+      for details!
+
 0.14  2015-04-07 21:11:28 PDT
     - Remove dependency on BioPerl via Bio::Seq and Bio::SeqIO
 
