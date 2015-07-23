@@ -10,24 +10,24 @@ use File::Basename qw(basename);
 $ENV{'COLUMNS'} = 80;
 $ENV{'LINES'}   = 50;
 
-generate_pod($_) for grep { -f $_ } <script/*>;
+generate_pod($_) for grep { -f $_ } <lib/App/RecordStream/Operation/*.pm>;
 
 sub generate_pod {
     my $script = shift;
 
     print "Generating pod documentation for $script\n";
 
-    my $script_base = basename($script);
+    $script = basename($script, ".pm");
 
-    my @help = `$script --help-all 2>/dev/null`;
+    my @help = `recs $script --help 2>/dev/null`;
 
-    open my $fh, '>', "doc/$script_base.pod"
-        or die "Could not open doc/$script_base.pod: $!";
+    open my $fh, '>', "doc/recs-$script.pod"
+        or die "Could not open doc/recs-$script.pod: $!";
 
     print $fh <<HEADER;
 =head1 NAME
 
-$script_base
+$script
 
 =head1 USAGE
 

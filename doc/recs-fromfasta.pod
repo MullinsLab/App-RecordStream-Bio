@@ -1,6 +1,6 @@
 =head1 NAME
 
-recs-fromfasta
+fromfasta
 
 =head1 USAGE
 
