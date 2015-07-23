@@ -2,6 +2,9 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.16  2015-07-23 10:52:49 PDT
+    - New command fromsam for parsing next-gen sequencing SAM files
+
 0.15  2015-04-19 21:19:03 PDT
     - Provide a fatpacked build suitable for use by the fatpacked version of
       recs (via the custom site mechanism).  See the installation documentation
