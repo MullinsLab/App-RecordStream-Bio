@@ -7,7 +7,10 @@ use base qw(App::RecordStream::Operation);
 sub init {
     my $this = shift;
     my $args = shift;
-    my $options = {};
+    my $options = {
+      'flags'   => \($this->{'DECODE_FLAGS'}),
+      'quals|Q' => \($this->{'DECODE_QUALS'}),
+    };
     $this->parse_options($args, $options);  # Ensures we pick up the automatic options
 }
 
@@ -30,13 +33,55 @@ sub accept_line {
     };
   }
 
+  $record{quals} = [ map { ord($_) - 33 } split '', $record{qual} eq '*' ? '' : $record{qual} ]
+    if $this->{'DECODE_QUALS'};
+
+  if ($this->{'DECODE_FLAGS'}) {
+    # Technically the flags to do with pairing and r1/r2 really refer
+    # generically to multiple segments and first/last segments, but in practice
+    # so far every one talks about pairing and first/second reads.  The SAM
+    # spec is good about being precise, but `samtools flags` uses the monikers
+    # below.
+    #
+    # 0x1   PAIRED        .. paired-end (or multiple-segment) sequencing technology
+    # 0x2   PROPER_PAIR   .. each segment properly aligned according to the aligner
+    # 0x4   UNMAP         .. segment unmapped
+    # 0x8   MUNMAP        .. next segment in the template unmapped
+    # 0x10  REVERSE       .. SEQ is reverse complemented
+    # 0x20  MREVERSE      .. SEQ of the next segment in the template is reversed
+    # 0x40  READ1         .. the first segment in the template
+    # 0x80  READ2         .. the last segment in the template
+    # 0x100 SECONDARY     .. secondary alignment
+    # 0x200 QCFAIL        .. not passing quality controls
+    # 0x400 DUP           .. PCR or optical duplicate
+    # 0x800 SUPPLEMENTARY .. supplementary alignment
+    $record{flag} ||= 0;
+    $record{flags} = {
+      paired        => !!($record{flag} & 0x1),
+      proper_pair   => !!($record{flag} & 0x2),
+      unmapped      => !!($record{flag} & 0x4),
+      mate_unmapped => !!($record{flag} & 0x8),
+      rc            => !!($record{flag} & 0x10),
+      mate_rc       => !!($record{flag} & 0x20),
+      r1            => !!($record{flag} & 0x40),
+      r2            => !!($record{flag} & 0x80),
+      secondary     => !!($record{flag} & 0x100),
+      qc_failed     => !!($record{flag} & 0x200),
+      duplicate     => !!($record{flag} & 0x400),
+      supplementary => !!($record{flag} & 0x800),
+    };
+  }
+
   $this->push_record( App::RecordStream::Record->new(\%record) );
   return 1;
 }
 
 sub usage {
   my $this = shift;
-  my $options = [];
+  my $options = [
+    ['flags', 'Decode flag bitstring into a "flags" hashref'],
+    ['quals', 'Decode qual string into a "quals" array of numeric values'],
+  ];
   my $args_string = $this->options_string($options);
 
   return <<USAGE;
