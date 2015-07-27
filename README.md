@@ -6,14 +6,18 @@ App::RecordStream::Bio - A collection of record-handling tools related to biolog
 
     # Turn a FASTA into a CSV after filtering for sequence names containing the
     # words POL or GAG.
-    recs-fromfasta --oneline < seqs.fasta           \
-        | recs-grep '{{id}} =~ /\b(POL|GAG)\b/i'    \
-        | recs-tocsv -k id,sequence
+    recs fromfasta --oneline < seqs.fasta           \
+        | recs grep '{{id}} =~ /\b(POL|GAG)\b/i'    \
+        | recs tocsv -k id,sequence
     
     # Filter gaps from sequences
-    recs-fromfasta seqs.fasta \
-        | recs-xform '{{seq}} =~ s/-//g' \
-        | recs-tofasta > seqs-nogaps.fasta
+    recs fromfasta seqs.fasta \
+        | recs xform '{{seq}} =~ s/-//g' \
+        | recs tofasta > seqs-nogaps.fasta
+
+    # Calculate average mapping quality from SAM reads
+    recs fromsam input.sam \
+        | recs collate -a avg,mapq
 
 # DESCRIPTION
 
@@ -26,6 +30,8 @@ them via their command line wrappers within a larger record stream pipeline.
 # TOOLS
 
 [recs-fromfasta](https://metacpan.org/pod/recs-fromfasta)
+
+[recs-fromsam](https://metacpan.org/pod/recs-fromsam)
 
 [recs-tofasta](https://metacpan.org/pod/recs-tofasta)
 
@@ -49,6 +55,7 @@ Congrats, you should now be able to run:
 
     ./recs fromfasta --help
     ./recs tofasta --help
+    ./recs fromsam --help
 
 recs version 4.0.14 or newer is required to support site loading from
 `~/.recs/site`.
