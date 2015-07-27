@@ -37,6 +37,10 @@ App::RecordStream::Bio - A collection of record-handling tools related to biolog
         | recs xform '{{seq}} =~ s/-//g' \
         | recs tofasta > seqs-nogaps.fasta
 
+    # Calculate average mapping quality from SAM reads
+    recs fromsam input.sam \
+        | recs collate -a avg,mapq
+
 =head1 DESCRIPTION
 
 App::RecordStream::Bio is a collection of record-handling tools related to
@@ -48,6 +52,8 @@ them via their command line wrappers within a larger record stream pipeline.
 =head1 TOOLS
 
 L<recs-fromfasta>
+
+L<recs-fromsam>
 
 L<recs-tofasta>
 
@@ -71,6 +77,7 @@ Congrats, you should now be able to run:
 
   ./recs fromfasta --help
   ./recs tofasta --help
+  ./recs fromsam --help
 
 recs version 4.0.14 or newer is required to support site loading from
 F<~/.recs/site>.
