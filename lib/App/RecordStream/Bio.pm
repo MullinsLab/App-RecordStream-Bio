@@ -28,14 +28,14 @@ App::RecordStream::Bio - A collection of record-handling tools related to biolog
 
     # Turn a FASTA into a CSV after filtering for sequence names containing the
     # words POL or GAG.
-    recs-fromfasta --oneline < seqs.fasta           \
-        | recs-grep '{{id}} =~ /\b(POL|GAG)\b/i'    \
-        | recs-tocsv -k id,sequence
+    recs fromfasta --oneline < seqs.fasta           \
+        | recs grep '{{id}} =~ /\b(POL|GAG)\b/i'    \
+        | recs tocsv -k id,sequence
     
     # Filter gaps from sequences
-    recs-fromfasta seqs.fasta \
-        | recs-xform '{{seq}} =~ s/-//g' \
-        | recs-tofasta > seqs-nogaps.fasta
+    recs fromfasta seqs.fasta \
+        | recs xform '{{seq}} =~ s/-//g' \
+        | recs tofasta > seqs-nogaps.fasta
 
 =head1 DESCRIPTION
 
