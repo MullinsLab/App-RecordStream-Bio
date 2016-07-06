@@ -1,6 +1,7 @@
 Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
+    - Point folks looking for fastq input/output to recs-fastq
 
 0.17  2015-07-26 17:01:43 PDT
     - Mention fromsam in main package documentation
