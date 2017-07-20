@@ -53,6 +53,8 @@ them via their command line wrappers within a larger record stream pipeline.
 
 L<recs-fromfasta>
 
+L<recs-fromgff3>
+
 L<recs-fromsam>
 
 L<recs-tofasta>
@@ -103,7 +105,7 @@ Thomas Sibley E<lt>trsibley@uw.eduE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2014- Mullins Lab, Department of Microbiology, University of Washington
+Copyright 2014-2017 Mullins Lab, Department of Microbiology, University of Washington
 
 =head1 LICENSE
 
