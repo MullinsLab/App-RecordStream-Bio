@@ -5,7 +5,7 @@ BEGIN {
 my %fatpacked;
 
 $fatpacked{"App/RecordStream/Bio.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_BIO';
-  package App::RecordStream::Bio;use strict;use 5.010;our$VERSION='0.17';eval {require App::RecordStream::Site;App::RecordStream::Site->register_site(name=>__PACKAGE__,path=>__PACKAGE__,)};1;
+  package App::RecordStream::Bio;use strict;use 5.010;our$VERSION='0.18';eval {require App::RecordStream::Site;App::RecordStream::Site->register_site(name=>__PACKAGE__,path=>__PACKAGE__,)};1;
 APP_RECORDSTREAM_BIO
 
 $fatpacked{"App/RecordStream/Operation/fromfasta.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_OPERATION_FROMFASTA';
@@ -25,6 +25,36 @@ $fatpacked{"App/RecordStream/Operation/fromfasta.pm"} = '#line '.(1+__LINE__).' 
         recs-fromfasta --oneline < example.fasta
   USAGE
 APP_RECORDSTREAM_OPERATION_FROMFASTA
+
+$fatpacked{"App/RecordStream/Operation/fromgff3.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_OPERATION_FROMGFF3';
+  use strict;use warnings;package App::RecordStream::Operation::fromgff3;use base qw(App::RecordStream::Operation);use Bio::GFF3::LowLevel qw<gff3_parse_feature>;sub init {my$this=shift;my$args=shift;my$options={};$this->parse_options($args,$options)}sub accept_line {my$this=shift;my$line=shift;return 1 if$line =~ /^#|^$/;my$feature=gff3_parse_feature($line);$this->push_record(App::RecordStream::Record->new($feature));return 1}sub usage {my$this=shift;my$options=[];my$args_string=$this->options_string($options);return <<USAGE}1;
+  Usage: recs fromgff3 <args> [<files>]
+     __FORMAT_TEXT__
+     Each line of input (or lines of <files>) is parsed as a GFF3 (General
+     Feature Format version 3) formatted record to produce a recs output record.
+  
+     The output records will contain the following fields:
+     __FORMAT_TEXT__
+  
+        seq_id source type start end score strand phase attributes
+  
+     __FORMAT_TEXT__
+     Additional feature attributes are parsed into the "attributes" key, which is a
+     hash keyed by the attribute name.  The values are arrays.
+     __FORMAT_TEXT__
+  
+     Refer to the GFF3 spec for field details:
+       https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md
+  
+  Arguments:
+  $args_string
+  
+  Examples:
+     Parse GFF3 and filter to just mRNA features:
+        recs fromgff3 hg38.gff | recs grep '{{type}} eq "mRNA"'
+  
+  USAGE
+APP_RECORDSTREAM_OPERATION_FROMGFF3
 
 $fatpacked{"App/RecordStream/Operation/fromsam.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_OPERATION_FROMSAM';
   use strict;use warnings;package App::RecordStream::Operation::fromsam;use base qw(App::RecordStream::Operation);sub init {my$this=shift;my$args=shift;my$options={'flags'=>\($this->{'DECODE_FLAGS'}),'quals|Q'=>\($this->{'DECODE_QUALS'}),};$this->parse_options($args,$options)}sub accept_line {my$this=shift;my$line=shift;return 1 if$line =~ /^@/;my@fields=qw[qname flag rname pos mapq cigar rnext pnext tlen seq qual];my@values=split /\t/,$line;my%record=map {$_=>shift@values}@fields;for my$tag (map {[split /:/,$_,3]}@values){$record{tag}{$tag->[0]}={type=>$tag->[1],value=>$tag->[2],}}$record{quals}=[map {ord($_)- 33}split '',$record{qual}eq '*' ? '' : $record{qual}]if$this->{'DECODE_QUALS'};if ($this->{'DECODE_FLAGS'}){$record{flag}||= 0;$record{flags}={paired=>!!($record{flag}& 0x1),proper_pair=>!!($record{flag}& 0x2),unmapped=>!!($record{flag}& 0x4),mate_unmapped=>!!($record{flag}& 0x8),rc=>!!($record{flag}& 0x10),mate_rc=>!!($record{flag}& 0x20),r1=>!!($record{flag}& 0x40),r2=>!!($record{flag}& 0x80),secondary=>!!($record{flag}& 0x100),qc_failed=>!!($record{flag}& 0x200),duplicate=>!!($record{flag}& 0x400),supplementary=>!!($record{flag}& 0x800),}}$this->push_record(App::RecordStream::Record->new(\%record));return 1}sub usage {my$this=shift;my$options=[['flags','Decode flag bitstring into a "flags" hashref'],['quals','Decode qual string into a "quals" array of numeric values'],];my$args_string=$this->options_string($options);return <<USAGE}1;

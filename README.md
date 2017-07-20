@@ -31,6 +31,8 @@ them via their command line wrappers within a larger record stream pipeline.
 
 [recs-fromfasta](https://metacpan.org/pod/recs-fromfasta)
 
+[recs-fromgff3](https://metacpan.org/pod/recs-fromgff3)
+
 [recs-fromsam](https://metacpan.org/pod/recs-fromsam)
 
 [recs-tofasta](https://metacpan.org/pod/recs-tofasta)
@@ -81,7 +83,7 @@ Thomas Sibley <trsibley@uw.edu>
 
 # COPYRIGHT
 
-Copyright 2014- Mullins Lab, Department of Microbiology, University of Washington
+Copyright 2014-2017 Mullins Lab, Department of Microbiology, University of Washington
 
 # LICENSE
 
