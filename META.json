@@ -17,6 +17,7 @@
       "directory" : [
          "eg",
          "examples",
+         "fatpack",
          "inc",
          "share",
          "t",
