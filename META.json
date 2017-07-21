@@ -55,18 +55,7 @@
          }
       }
    },
-   "release_status" : "stable",
-   "resources" : {
-      "bugtracker" : {
-         "web" : "https://github.com/MullinsLab/App-RecordStream-Bio/issues"
-      },
-      "homepage" : "https://github.com/MullinsLab/App-RecordStream-Bio",
-      "repository" : {
-         "type" : "git",
-         "url" : "https://github.com/MullinsLab/App-RecordStream-Bio.git",
-         "web" : "https://github.com/MullinsLab/App-RecordStream-Bio"
-      }
-   },
-   "version" : "0.20"
+   "release_status" : "testing",
+   "version" : "0.21"
 }
 

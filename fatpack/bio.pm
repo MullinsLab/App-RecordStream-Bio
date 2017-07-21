@@ -411,5 +411,5 @@ unshift @INC, bless \%fatpacked, $class;
   } # END OF FATPACK CODE
 
 use App::RecordStream::Bio;
-$App::RecordStream::Bio::VERSION = q[0.20];
+$App::RecordStream::Bio::VERSION = q[0.21-TRIAL];
 1;
