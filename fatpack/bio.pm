@@ -5,7 +5,7 @@ BEGIN {
 my %fatpacked;
 
 $fatpacked{"App/RecordStream/Bio.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_BIO';
-  package App::RecordStream::Bio;use strict;use 5.010;our$VERSION='0.20';eval {require App::RecordStream::Site;App::RecordStream::Site->register_site(name=>__PACKAGE__,path=>__PACKAGE__,)};1;
+  package App::RecordStream::Bio;use strict;use 5.010;our$VERSION='0.22';eval {require App::RecordStream::Site;App::RecordStream::Site->register_site(name=>__PACKAGE__,path=>__PACKAGE__,)};1;
 APP_RECORDSTREAM_BIO
 
 $fatpacked{"App/RecordStream/Operation/fromfasta.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_OPERATION_FROMFASTA';
@@ -411,5 +411,5 @@ unshift @INC, bless \%fatpacked, $class;
   } # END OF FATPACK CODE
 
 use App::RecordStream::Bio;
-$App::RecordStream::Bio::VERSION = q[0.20-1-g0486223];
+$App::RecordStream::Bio::VERSION = q[0.23];
 1;
