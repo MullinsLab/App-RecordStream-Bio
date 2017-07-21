@@ -2,6 +2,9 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.20  2017-07-21 10:08:10 PDT
+    - Better fatpacking of the standalone bio.pm download
+
 0.19  2017-07-20 13:33:09 PDT
     - New command fromgff3 for parsing GFF3 annotation files
 
