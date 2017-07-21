@@ -8,3 +8,5 @@ MYMETA.*
 /.prove
 /.build
 /fatpack/lib/
+/fatpack/fatlib/
+/fatpack/trace
