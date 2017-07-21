@@ -2,6 +2,10 @@ Revision history for App-RecordStream-Bio
 
 {{$NEXT}}
 
+0.22  2017-07-21 10:25:50 PDT
+    - Testing release process, no functional changes (but hey, version numbers
+      are cheap!)
+
 0.20  2017-07-21 10:08:10 PDT
     - Better fatpacking of the standalone bio.pm download
 
