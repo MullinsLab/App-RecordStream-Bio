@@ -37,6 +37,8 @@ them via their command line wrappers within a larger record stream pipeline.
 
 [recs-tofasta](https://metacpan.org/pod/recs-tofasta)
 
+[recs-togff3](https://metacpan.org/pod/recs-togff3)
+
 Looking for `fromfastq` or `tofastq`?  Install the
 [recs-fastq](https://github.com/MullinsLab/recs-fastq) package.
 

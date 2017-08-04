@@ -5,7 +5,7 @@ BEGIN {
 my %fatpacked;
 
 $fatpacked{"App/RecordStream/Bio.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_BIO';
-  package App::RecordStream::Bio;use strict;use 5.010;our$VERSION='0.22';eval {require App::RecordStream::Site;App::RecordStream::Site->register_site(name=>__PACKAGE__,path=>__PACKAGE__,)};1;
+  package App::RecordStream::Bio;use strict;use 5.010;our$VERSION='0.23';eval {require App::RecordStream::Site;App::RecordStream::Site->register_site(name=>__PACKAGE__,path=>__PACKAGE__,)};1;
 APP_RECORDSTREAM_BIO
 
 $fatpacked{"App/RecordStream/Operation/fromfasta.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_OPERATION_FROMFASTA';
@@ -27,7 +27,7 @@ $fatpacked{"App/RecordStream/Operation/fromfasta.pm"} = '#line '.(1+__LINE__).' 
 APP_RECORDSTREAM_OPERATION_FROMFASTA
 
 $fatpacked{"App/RecordStream/Operation/fromgff3.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_OPERATION_FROMGFF3';
-  use strict;use warnings;package App::RecordStream::Operation::fromgff3;use base qw(App::RecordStream::Operation);use Bio::GFF3::LowLevel qw<gff3_parse_feature>;sub init {my$this=shift;my$args=shift;my$options={};$this->parse_options($args,$options)}sub accept_line {my$this=shift;my$line=shift;return 1 if$line =~ /^#|^$/;my$feature=gff3_parse_feature($line);$this->push_record(App::RecordStream::Record->new($feature));return 1}sub usage {my$this=shift;my$options=[];my$args_string=$this->options_string($options);return <<USAGE}1;
+  use strict;use warnings;package App::RecordStream::Operation::fromgff3;use base qw(App::RecordStream::Operation);use Bio::GFF3::LowLevel qw<gff3_parse_feature>;sub init {my$self=shift;my$args=shift;my$options={};$self->parse_options($args,$options)}sub accept_line {my$self=shift;my$line=shift;return 1 if$line =~ /^#|^$/;my$feature=gff3_parse_feature($line);$self->push_record(App::RecordStream::Record->new($feature));return 1}sub usage {my$self=shift;my$options=[];my$args_string=$self->options_string($options);return <<USAGE}1;
   Usage: recs fromgff3 <args> [<files>]
      __FORMAT_TEXT__
      Each line of input (or lines of <files>) is parsed as a GFF3 (General
@@ -57,7 +57,7 @@ $fatpacked{"App/RecordStream/Operation/fromgff3.pm"} = '#line '.(1+__LINE__).' "
 APP_RECORDSTREAM_OPERATION_FROMGFF3
 
 $fatpacked{"App/RecordStream/Operation/fromsam.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_OPERATION_FROMSAM';
-  use strict;use warnings;package App::RecordStream::Operation::fromsam;use base qw(App::RecordStream::Operation);sub init {my$this=shift;my$args=shift;my$options={'flags'=>\($this->{'DECODE_FLAGS'}),'quals|Q'=>\($this->{'DECODE_QUALS'}),};$this->parse_options($args,$options)}sub accept_line {my$this=shift;my$line=shift;return 1 if$line =~ /^@/;my@fields=qw[qname flag rname pos mapq cigar rnext pnext tlen seq qual];my@values=split /\t/,$line;my%record=map {$_=>shift@values}@fields;for my$tag (map {[split /:/,$_,3]}@values){$record{tag}{$tag->[0]}={type=>$tag->[1],value=>$tag->[2],}}$record{quals}=[map {ord($_)- 33}split '',$record{qual}eq '*' ? '' : $record{qual}]if$this->{'DECODE_QUALS'};if ($this->{'DECODE_FLAGS'}){$record{flag}||= 0;$record{flags}={paired=>!!($record{flag}& 0x1),proper_pair=>!!($record{flag}& 0x2),unmapped=>!!($record{flag}& 0x4),mate_unmapped=>!!($record{flag}& 0x8),rc=>!!($record{flag}& 0x10),mate_rc=>!!($record{flag}& 0x20),r1=>!!($record{flag}& 0x40),r2=>!!($record{flag}& 0x80),secondary=>!!($record{flag}& 0x100),qc_failed=>!!($record{flag}& 0x200),duplicate=>!!($record{flag}& 0x400),supplementary=>!!($record{flag}& 0x800),}}$this->push_record(App::RecordStream::Record->new(\%record));return 1}sub usage {my$this=shift;my$options=[['flags','Decode flag bitstring into a "flags" hashref'],['quals','Decode qual string into a "quals" array of numeric values'],];my$args_string=$this->options_string($options);return <<USAGE}1;
+  use strict;use warnings;package App::RecordStream::Operation::fromsam;use base qw(App::RecordStream::Operation);sub init {my$self=shift;my$args=shift;my$options={'flags'=>\($self->{'DECODE_FLAGS'}),'quals|Q'=>\($self->{'DECODE_QUALS'}),};$self->parse_options($args,$options)}sub accept_line {my$self=shift;my$line=shift;return 1 if$line =~ /^@/;my@fields=qw[qname flag rname pos mapq cigar rnext pnext tlen seq qual];my@values=split /\t/,$line;my%record=map {$_=>shift@values}@fields;for my$tag (map {[split /:/,$_,3]}@values){$record{tag}{$tag->[0]}={type=>$tag->[1],value=>$tag->[2],}}$record{quals}=[map {ord($_)- 33}split '',$record{qual}eq '*' ? '' : $record{qual}]if$self->{'DECODE_QUALS'};if ($self->{'DECODE_FLAGS'}){$record{flag}||= 0;$record{flags}={paired=>!!($record{flag}& 0x1),proper_pair=>!!($record{flag}& 0x2),unmapped=>!!($record{flag}& 0x4),mate_unmapped=>!!($record{flag}& 0x8),rc=>!!($record{flag}& 0x10),mate_rc=>!!($record{flag}& 0x20),r1=>!!($record{flag}& 0x40),r2=>!!($record{flag}& 0x80),secondary=>!!($record{flag}& 0x100),qc_failed=>!!($record{flag}& 0x200),duplicate=>!!($record{flag}& 0x400),supplementary=>!!($record{flag}& 0x800),}}$self->push_record(App::RecordStream::Record->new(\%record));return 1}sub usage {my$self=shift;my$options=[['flags','Decode flag bitstring into a "flags" hashref'],['quals','Decode qual string into a "quals" array of numeric values'],];my$args_string=$self->options_string($options);return <<USAGE}1;
   Usage: recs fromsam <args> [<files>]
      __FORMAT_TEXT__
      Each line of input (or lines of <files>) is parsed as a SAM (Sequence
@@ -124,6 +124,36 @@ $fatpacked{"App/RecordStream/Operation/tofasta.pm"} = '#line '.(1+__LINE__).' "'
     recs-fromfasta seqs.fa | recs-xform '{{sequence}} =~ s/-//g' | recs-tofasta > seqs-nogaps.fa
   USAGE
 APP_RECORDSTREAM_OPERATION_TOFASTA
+
+$fatpacked{"App/RecordStream/Operation/togff3.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'APP_RECORDSTREAM_OPERATION_TOGFF3';
+  use strict;use warnings;package App::RecordStream::Operation::togff3;use base qw(App::RecordStream::Operation);use Bio::GFF3::LowLevel qw<gff3_format_feature>;sub init {my$self=shift;my$args=shift;my$options={};$self->parse_options($args,$options)}sub accept_record {my$self=shift;my$record=shift;my$feature=gff3_format_feature($record);$self->push_line("##gff-version 3")unless$self->{HEADER_EMITTED}++;chomp$feature;$self->push_line($feature);return 1}sub usage {my$self=shift;my$options=[];my$args_string=$self->options_string($options);return <<USAGE}1;
+  Usage: recs togff3 <args> [<files>]
+     __FORMAT_TEXT__
+     Each input record is formatted as a GFF3 (General Feature Format version 3)
+     line and output to stdout.
+  
+     The input records should contain the following fields:
+     __FORMAT_TEXT__
+  
+        seq_id source type start end score strand phase attributes
+  
+     __FORMAT_TEXT__
+     These are the same fields obtained when using the corresponding "fromgff3"
+     command.
+     __FORMAT_TEXT__
+  
+     Refer to the GFF3 spec for field details:
+       https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md
+  
+  Arguments:
+  $args_string
+  
+  Examples:
+     Parse GFF3 and filter to just mRNA features, writing back out GFF3:
+        recs fromgff3 hg38.gff | recs grep '{{type}} eq "mRNA"' | recs togff3
+  
+  USAGE
+APP_RECORDSTREAM_OPERATION_TOGFF3
 
 $fatpacked{"Bio/GFF3/LowLevel.pm"} = '#line '.(1+__LINE__).' "'.__FILE__."\"\n".<<'BIO_GFF3_LOWLEVEL';
   package Bio::GFF3::LowLevel;BEGIN {$Bio::GFF3::LowLevel::AUTHORITY='cpan:RBUELS'}{$Bio::GFF3::LowLevel::VERSION='2.0'}use strict;use Scalar::Util ();use URI::Escape ();require Exporter;our@ISA=qw(Exporter);our@EXPORT_OK=qw(gff3_parse_feature gff3_parse_attributes gff3_parse_directive gff3_format_feature gff3_format_attributes gff3_escape gff3_unescape);my@gff3_field_names=qw(seq_id source type start end score strand phase attributes);sub gff3_parse_feature {my ($line)=@_;no warnings 'uninitialized';my@f=split /\t/,$line;for(@f){if($_ eq '.'){$_=undef}}$f[0]=~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg;$f[1]=~ s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg;$f[8]=gff3_parse_attributes($f[8]);my%parsed;@parsed{@gff3_field_names}=@f;return \%parsed}sub gff3_parse_attributes {my ($attr_string)=@_;return {}if!defined$attr_string || $attr_string eq '.';$attr_string =~ s/\r?\n$//;my%attrs;for my$a (split ';',$attr_string){no warnings 'uninitialized';my ($name,$values)=split '=',$a,2;next unless defined$values;push @{$attrs{$name}},map {s/%([0-9A-Fa-f]{2})/chr(hex($1))/eg;$_}split ',',$values}return \%attrs}sub gff3_parse_directive {my ($line)=@_;my ($name,$contents)=$line =~ /^ \s* \#\# \s* (\S+) \s* (.*) $/x or return;my$parsed={directive=>$name };if(length$contents){$contents =~ s/\r?\n$//;$parsed->{value}=$contents}if($name eq 'sequence-region'){my ($seqid,$start,$end)=split /\s+/,$contents,3;s/\D//g for$start,$end;@{$parsed}{qw(seq_id start end)}=($seqid,$start,$end)}elsif($name eq 'genome-build'){my ($source,$buildname)=split /\s+/,$contents,2;@{$parsed}{qw(source buildname)}=($source,$buildname)}return$parsed}sub gff3_format_feature {my ($f)=@_;my$attr_string=$f->{attributes};$attr_string='.' unless defined$attr_string;$attr_string=gff3_format_attributes($attr_string)if ref($attr_string)eq 'HASH' &&!Scalar::Util::blessed($attr_string);return join("\t",(map {defined $_ ? gff3_escape($_): '.'}@{$f}{@gff3_field_names[0..7]}),$attr_string)."\n"}my%force_attr_first=(ID=>1,Name=>2,Alias=>3,Parent=>4,);sub _cmp_attr_names {no warnings 'uninitialized';my ($fa,$fb)=@force_attr_first{$a,$b };return$fa <=> $fb if$fa && $fb;return -1 if$fa &&!$fb;return 1 if!$fa && $fb;return$a cmp $b}sub gff3_format_attributes {my ($attr)=@_;return '.' unless defined$attr;my$astring=join ';'=>(map {my$key=$_;my$val=$attr->{$key};no warnings 'uninitialized';$val=join(',',map gff3_escape($_),ref$val eq 'ARRAY' ? @$val : $val);if(length$val){"$key=$val"}else {()}}sort _cmp_attr_names keys %$attr);return length$astring ? $astring : '.'}sub gff3_escape {URI::Escape::uri_escape($_[0],'\n\r\t;=%&,\x00-\x1f\x7f-\xff')}*gff3_unescape=\&URI::Escape::uri_unescape;
@@ -411,5 +441,5 @@ unshift @INC, bless \%fatpacked, $class;
   } # END OF FATPACK CODE
 
 use App::RecordStream::Bio;
-$App::RecordStream::Bio::VERSION = q[0.23];
+$App::RecordStream::Bio::VERSION = q[0.23-2-g5c4fc92];
 1;
