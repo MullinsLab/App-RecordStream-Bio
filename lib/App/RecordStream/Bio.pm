@@ -59,6 +59,8 @@ L<recs-fromsam>
 
 L<recs-tofasta>
 
+L<recs-togff3>
+
 Looking for C<fromfastq> or C<tofastq>?  Install the
 L<recs-fastq|https://github.com/MullinsLab/recs-fastq> package.
 
