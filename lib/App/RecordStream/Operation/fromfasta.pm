@@ -4,19 +4,18 @@ use strict;
 use warnings;
 
 use base qw(App::RecordStream::Operation);
+use JSON::MaybeXS qw< decode_json >;
 
 sub init {
     my $self = shift;
     my $args = shift;
 
-    my $oneline = 0;
     my %options = (
-        "oneline"   => \$oneline,
+        "oneline"   => \($self->{ONELINE}),
+        "fastj"     => \($self->{FASTJ}),
     );
 
     $self->parse_options($args, \%options);
-
-    $self->{ONELINE} = $oneline;
 }
 
 sub accept_line {
@@ -31,6 +30,18 @@ sub accept_line {
             name        => $name,
             id          => $id,
             description => $desc,
+
+            # If we're parsing FASTJ, then avoid copying the JSON into the name
+            # field by setting it to the id and default the description to
+            # undef.  Any "description" field in the JSON will override it.
+            %{
+                $self->{FASTJ}
+                    ? { name        => $id,
+                        description => undef,
+                        %{ decode_json($desc) || {} } }
+                    : {}
+            },
+
             _filename   => $self->get_current_filename,
         );
     } else {
@@ -67,6 +78,7 @@ sub usage {
 
   my $options = [
     [ 'oneline', 'Strip any newlines from the sequence so it is one long line'],
+    [ 'fastj',   'Decode JSON "description" and merge it into the output record'],
   ];
 
   my $args_string = $self->options_string($options);
@@ -77,6 +89,9 @@ Usage: recs-fromfasta <args> [<files>]
    Each sequence from the FASTA input files (or stdin) produces an output
    record with the keys name and sequence.  Each sequence name is also split into
    id and description on the first whitespace, if any.
+
+   With the --fastj option, descriptions are decoded as a JSON object and
+   merged into the output record.  See also: recs tofasta --fastj
    __FORMAT_TEXT__
 
 Arguments:

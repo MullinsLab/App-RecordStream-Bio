@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use base qw(App::RecordStream::Operation);
+use JSON::MaybeXS qw< encode_json >;
 
 sub init {
     my $self = shift;
@@ -17,6 +18,7 @@ sub init {
         "width|w=i"         => \($self->{WIDTH}),
         "oneline"           => \($self->{ONELINE}),
         "passthru"          => \($self->{PASSTHRU}),
+        "fastj"             => \($self->{FASTJ}),
     };
 
     $self->parse_options($args, $spec);
@@ -55,6 +57,23 @@ sub accept_record {
     $props{'-id'} = ""
         unless defined $props{'-id'} or $self->{PASSTHRU};
 
+    # FASTJ puts a JSON object in the description field.  Copy any description
+    # we already have into the JSON along with the rest of the record.
+    #
+    # XXX TODO: don't duplicate mapped $self->{KEYS} in the JSON.  This
+    # requires adding something like a ->_generate_keydeletion_sub() method and
+    # public API around it to KeySpec and hooking that into Records so that we
+    # can remove a keyspec from a record.  An worse alternative is deep cloning
+    # the record while skipping values which match the reference returned by
+    # ->guess_key_from_spec().
+    #   -trs, 30 March 2018
+    if ($self->{FASTJ}) {
+        $props{'-desc'} = encode_json({
+            description => $props{'-desc'},
+            %$record,
+        });
+    }
+
     my $fasta = sprintf ">%s\n%s",
         join(" ", map { s/[\n\r]//g; $_ }
                  grep { defined }
@@ -83,6 +102,7 @@ sub usage {
         [ 'width|w <#>',                'Format sequence blocks to # characters wide' ],
         [ 'oneline',                    'Format sequences on a single long line' ],
         [ 'passthru',                   'Pass through nucleotides unformatted' ],
+        [ 'fastj',                      'Encode input record as JSON into the sequence "description"' ],
     ];
 
     my $args_string = $self->options_string($options);
@@ -98,6 +118,13 @@ Usage: recs-tofasta <options> [files]
    used, disabling the defaults.  Note that specifying NONE for --id will cause
    any --description to appear with a space between it and the line's ">",
    unless --passthru is also used.
+
+   With the --fastj option, the entire input record is encoded as a JSON object
+   and placed into the "description" of each FASTA sequence record.  Any standard,
+   textual description specified by --description becomes a "description" key in
+   the object.  This format is dubbed FASTJ and supports structured sequence
+   metadata while remaining interchangable with all software that consumes
+   FASTA.  See also: recs fromfasta --fastj
    __FORMAT_TEXT__
 
 Arguments:
